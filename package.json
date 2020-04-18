@@ -1,5 +1,5 @@
 {
-  "name": "express-ajv-middleware",
+  "name": "express-ajsv-middleware",
   "version": "1.0.0",
   "description": "Express Another JSON Schema Validator Middleware",
   "main": "index.js",
