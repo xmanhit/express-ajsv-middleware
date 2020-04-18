@@ -1,4 +1,4 @@
-# express-ajv-middleware
+# express-ajsv-middleware
 [express.js](https://github.com/visionmedia/express) middleware for validating requests against JSON Schema
 
 <hr>
@@ -6,7 +6,7 @@
 ## Installation
 
 ```sh
-$ npm install express-ajv-middleware
+$ npm install express-ajsv-middleware
 ```
 
 `--save` is no longer necessary as of `npm@5`
@@ -15,7 +15,7 @@ $ npm install express-ajv-middleware
 
 1. Require the module
 ```js
-var { Validator, ValidationError } = require('express-ajv-middleware');
+var { Validator, ValidationError } = require('express-ajsv-middleware');
 ```
 
 2. Initialize a Validator instance, optionally passing in an [ajv#options](https://github.com/epoberezkin/ajv#options) object
@@ -66,7 +66,7 @@ More information on [ajv#errors](https://github.com/epoberezkin/ajv#validation-e
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var { Validator, ValidationError } = require('express-ajv-middleware');
+var { Validator, ValidationError } = require('express-ajsv-middleware');
 
 
 // Initialize a Validator instance first
