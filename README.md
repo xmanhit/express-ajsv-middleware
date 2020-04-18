@@ -157,6 +157,7 @@ var updateUser = {
 app.post('/users/', Validator.validate(updateUser), function(req, res) {
     // application code
 });
+```
 
 
 ## More documentation on JSON schemas
