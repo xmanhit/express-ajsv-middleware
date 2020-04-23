@@ -1,53 +1,40 @@
-var Ajv = require("ajv");
+let Ajv = require('ajv')
+let ajv = Ajv({ allErrors: true })
 
 /**
- * Express middleware for validating requests
- *
- * @class Validator
+ * Format error responses
+ * @param  {Object} schemaErrors - array of json-schema errors, describing each validation failure
+ * @return {String} formatted api response
  */
-class Validator {
-  constructor(ajvOptions) {
-    this.ajv = new Ajv(ajvOptions);
-    this.validate = this.validate.bind(this);
-  }
-
-  /**
-   * Validator method to be used as middleware
-   *
-   * @param {Object} options Options in format schema
-   * @returns
-   */
-  validate(schema) {
-    // The actual middleware function
-    return (req, res, next) => {
-      const requestProperty = schema.properties;
-      const validateFunction = this.ajv.compile(schema);
-      // Test if property is valid
-      const valid = validateFunction(req[requestProperty]);
-      if (!valid) {
-        next(new ValidationError(validateFunction.errors));
-      } else {
-        next();
-      }
-    };
+function errorResponse(schemaErrors) {
+  let errors = schemaErrors.map((error) => {
+    return {
+      path: error.dataPath,
+      message: error.message
+    }
+  })
+  return {
+    status: 'failed',
+    errors: errors
   }
 }
 
 /**
- * Validation Error
- *
- * @class ValidationError
- * @extends {Error}
+ * Validates incoming request bodies against the given schema,
+ * providing an error response when validation fails
+ * @param  {schema} schema - the schema to validate
+ * @return {Object} response
  */
-class ValidationError extends Error {
-  constructor(validationErrors) {
-    super();
-    this.name = "JsonSchemaValidationError";
-    this.validationErrors = validationErrors;
+let validateSchema = (schema) => {
+  return (req, res, next) => {
+    let valid = ajv.validate(schema, req.body)
+    if (!valid) {
+      return res.send(errorResponse(ajv.errors))
+    }
+    next()
   }
 }
 
 module.exports = {
-  Validator,
-  ValidationError,
+  validateSchema
 };
