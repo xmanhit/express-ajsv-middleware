@@ -36,28 +36,28 @@ var validateSchema = require('express-ajsv-middleware');
 
 // Define a JSON Schema
 var createUser = {
-  "title": "new user",
-  "description": "describes properties required to create a user",
-  "type": "object",
-  "properties": {
-    "first": {
-      "type": "string",
-      "description": "firstname of the account user"
+  title: "new user",
+  description: "describes properties required to create a user",
+  type: "object",
+  properties: {
+    first: {
+      type: "string",
+      description: "firstname of the account user"
     },
-    "last": {
-      "type": "string",
-      "description": "lastname of the account user"
+    last: {
+      type: "string",
+      description: "lastname of the account user"
     },
-    "username": {
-      "type": "string",
-      "description": "username of account"
+    username: {
+      type: "string",
+      description: "username of account"
     },
-    "rememberEmail": {
-      "type": "boolean",
-      "description": "whether the users email address should be remembered"
+    rememberEmail: {
+      type: "boolean",
+      description: "whether the users email address should be remembered"
     }
   },
-  "required": ["first", "last", "username", "rememberEmail"]
+  required: ["first", "last", "username", "rememberEmail"]
 }
 
 
