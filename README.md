@@ -41,12 +41,12 @@ var { Validator, ValidationError } = require('express-ajsv-middleware');
 2. Initialize a Validator instance, optionally passing in an [ajv#options](https://github.com/epoberezkin/ajv#options) object
 
 ```js
-var validator = new Validator({allErrors: true});
+var ajsv = new Validator({allErrors: true});
 ```
 
 3. *Optional* - Define a bound shortcut function that can be used instead of Validator.validate
 ```js
-var validate = validator.validate;
+var validate = ajsv.validate;
 ```
 
 4. Use the Validator.validate method as an Express middleware, passing in an options object of the following format:
@@ -66,7 +66,7 @@ app.post('/street/', validate({body: bodySchema}), function(req, res) {
 
 ## Error handling
 
-On encountering erroneous data, the validator will call next() with a ValidationError object.
+On encountering erroneous data, the ajsv will call next() with a ValidationError object.
 It is recommended to setup a general error handler for your app where you will catch ValidationError errors
 
 Example - error thrown for the `body` request property
@@ -92,10 +92,10 @@ var { Validator, ValidationError } = require('express-ajsv-middleware');
 
 
 // Initialize a Validator instance first
-var validator = new Validator({allErrors: true}); // pass in options to the Ajv instance
+var ajsv = new Validator({allErrors: true}); // pass in options to the Ajv instance
 
 // Define a shortcut function
-var validate = validator.validate;
+var validate = ajsv.validate;
 
 // Define a JSON Schema
 var StreetSchema = {
@@ -194,13 +194,13 @@ app.post('/street/', loadSchema, Validator.validate({body: getSchema}), function
 ```
 
 ## Ajv instance
-The Ajv instance can be accessed via validator.ajv.
+The Ajv instance can be accessed via ajsv.ajv.
 
 ```js
 var { Validator, ValidationError } = require('express-ajsv-middleware');
-var validator = new Validator({allErrors: true});
+var ajsv = new Validator({allErrors: true});
 
-validator.ajv // ajv instance
+ajsv.ajv // ajv instance
 ```
 
 ## More documentation on JSON schemas
