@@ -35,23 +35,23 @@ $ npm install express-ajsv-middleware
 
 1. Require the module
 ```js
-var { Validator, ValidationError } = require('express-ajsv-middleware');
+const { Validator, ValidationError } = require('express-ajsv-middleware');
 ```
 
 2. Initialize a Validator instance, optionally passing in an [ajv#options](https://github.com/epoberezkin/ajv#options) object
 
 ```js
-var ajsv = new Validator({allErrors: true});
+const ajsv = new Validator({allErrors: true});
 ```
 
-3. *Optional* - Define a bound shortcut function that can be used instead of Validator.validate
+3. *Optional* - Define a bound shortcut function that can be used instead of ajsv.validate
 ```js
-var validate = ajsv.validate;
+const { validate } = ajsv;
 ```
 
-4. Use the Validator.validate method as an Express middleware, passing in an options object of the following format:
+4. Use the ajsv.validate method as an Express middleware, passing in an options object of the following format:
 ```js
-Validator.validate({
+ajsv.validate({
     requestProperty: schemaToUse
 })
 ```
@@ -85,20 +85,20 @@ More information on [ajv#errors](https://github.com/epoberezkin/ajv#validation-e
 ## Example Express app
 
 ```js
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var { Validator, ValidationError } = require('express-ajsv-middleware');
+const { Validator, ValidationError } = require('express-ajsv-middleware');
 
 
 // Initialize a Validator instance first
-var ajsv = new Validator({allErrors: true}); // pass in options to the Ajv instance
+const ajsv = new Validator({allErrors: true}); // pass in options to the Ajv instance
 
 // Define a shortcut function
-var validate = ajsv.validate;
+const { validate } = ajsv;
 
 // Define a JSON Schema
-var StreetSchema = {
+const StreetSchema = {
     type: 'object',
     required: ['number', 'name', 'type'],
     properties: {
@@ -116,7 +116,7 @@ var StreetSchema = {
 }
 
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.json());
 
@@ -143,7 +143,7 @@ app.use(function(err, req, res, next) {
 Sometimes your route may depend on the `body` and `query` both having a specific format.  In this example we use `body` and `query` but you can choose to validate any `request` properties you like. 
 
 ```js
-var TokenSchema = {
+const TokenSchema = {
     type: 'object', // req.query is of type object
     required: ['token'], // req.query.token is required
     properties: {
@@ -197,8 +197,8 @@ app.post('/street/', loadSchema, Validator.validate({body: getSchema}), function
 The Ajv instance can be accessed via ajsv.ajv.
 
 ```js
-var { Validator, ValidationError } = require('express-ajsv-middleware');
-var ajsv = new Validator({allErrors: true});
+const { Validator, ValidationError } = require('express-ajsv-middleware');
+const ajsv = new Validator({allErrors: true});
 
 ajsv.ajv // ajv instance
 ```
