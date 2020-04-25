@@ -9,7 +9,6 @@ class Validator {
   constructor(ajvOptions) {
     this.ajv      = new Ajv(ajvOptions);
     this.validate = this.validate.bind(this);
-    require("ajv-errors")(this.ajv);
   }
 
   /**
