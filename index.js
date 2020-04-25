@@ -7,8 +7,9 @@ var Ajv = require("ajv");
  */
 class Validator {
   constructor(ajvOptions) {
-    this.ajv = new Ajv(ajvOptions);
+    this.ajv      = new Ajv(ajvOptions);
     this.validate = this.validate.bind(this);
+    require("ajv-errors")(this.ajv);
   }
 
   /**
@@ -23,7 +24,7 @@ class Validator {
     
     // Cache validate functions
     const validateFunctions = Object.keys(options).map((requestProperty) => {
-      const schema = options[requestProperty];
+      const schema           = options[requestProperty];
       const validateFunction = this.ajv.compile(schema);
       return { requestProperty, validateFunction };
     }, self);
@@ -58,7 +59,7 @@ class Validator {
 class ValidationError extends Error {
   constructor(validationErrors) {
     super();
-    this.name = "ValidationError";
+    this.name             = "ValidationError";
     this.validationErrors = validationErrors;
   }
 }
